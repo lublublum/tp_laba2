@@ -1,5 +1,6 @@
 #include "Note.h"
 #include <iostream>
+#include <limits>
 
 // Конструкторы и деструктор
 
@@ -40,12 +41,35 @@ void NOTE::setSurname(const std::string surname) {this->surname = surname;}
 
 void NOTE::setName(const std::string name) {this->name = name;}
 
-void NOTE::setPhone(const std::string phone) { this->phone = phone; }
+void NOTE::setPhone(const std::string phone) {
+    if (phone.empty())
+        throw std::invalid_argument("Номер телефона пуст");
 
-void NOTE::setBirthday(const int birthday[3]) {
-    for (int i = 0; i < 3; i++) {
-        this->birthday[i] = birthday[i];
+    for (char c : phone) {
+        if (!std::isdigit(static_cast<unsigned char>(c))) {
+            throw std::invalid_argument(
+                "Номер телефона должен содержать только цифры"
+            );
+        }
     }
+
+    this->phone = phone;
+}
+void NOTE::setBirthday(const int birthday[3])
+{
+    int day = birthday[0];
+    int month = birthday[1];
+    int year = birthday[2];
+
+    if (day < 1 || day > 31 ||
+        month < 1 || month > 12 ||
+        year < 1900 || year > 2100)
+    {
+        throw std::invalid_argument("Некорректная дата рождения");
+    }
+
+    for (int i = 0; i < 3; ++i)
+        this->birthday[i] = birthday[i];
 }
 
 // getters
@@ -81,6 +105,13 @@ std::istream& operator>>(std::istream& in, NOTE& note)
     std::cout << "День рождения (день месяц год): ";
     in >> birthday[0] >> birthday[1] >> birthday[2];
 
+    if (in.fail()) {
+        in.clear();
+        in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        throw std::invalid_argument(
+            "Дата должна содержать только числа"
+        );
+    }
     note.setSurname(surname);
     note.setName(name);
     note.setPhone(phone);

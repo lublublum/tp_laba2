@@ -26,7 +26,7 @@ public:
 
     bool findByPhone(const std::string& phone) const;
 
-
+    void editByPhone(const std::string& phone);
     void printAll() const;
 
 };

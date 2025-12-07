@@ -104,7 +104,7 @@ void NoteList::printAll() const
         return;
     }
 
-    std::cout  << "Фамилия\t\tИмя\t\tТелефон\t\tДата рождения\n";
+    std::cout << "Фамилия\t\tИмя\t\tТелефон\t\tДата рождения\n";
     std::cout << "----------------------------------------------------------------\n";
 
 
@@ -113,4 +113,30 @@ void NoteList::printAll() const
         std::cout << cur->data << '\n';
         cur = cur->next;
     }
+}
+
+void NoteList::editByPhone(const std::string& phone)
+{
+    Node* cur = first;
+
+    while (cur) {
+        if (cur->data.getPhone() == phone) {
+
+            std::cout << "Текущие данные:\n";
+            std::cout << cur->data << "\n\n";
+
+            std::cout << "Введите новые данные:\n";
+
+            NOTE newNote;
+            std::cin >> newNote;
+
+            cur->data = newNote;
+
+            std::cout << "Запись успешно обновлена.\n";
+            return;
+        }
+        cur = cur->next;
+    }
+
+    throw std::invalid_argument("Редактирование невозможно : номер телефона не найден");
 }

@@ -10,6 +10,7 @@ set(SRC
     main.cpp
     sources/Note.cpp
     sources/NoteList.cpp
+    sources/TextTask.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SRC})
@@ -18,6 +19,7 @@ add_executable(${PROJECT_NAME} ${SRC})
 set(HEADERS
     headers/Note.h
     headers/NoteList.h
+    headers/TextTask.h
 )
 
 # Связываем заголовки с исполняемым файлом (для IDE)
