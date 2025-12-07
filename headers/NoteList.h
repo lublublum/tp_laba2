@@ -3,7 +3,33 @@
 
 #include "Note.h"
 #include <iostream>
+#include <string>
+#include <iomanip>
 
-void printNoteList();
+struct Node
+{
+    NOTE data;
+    Node * next;
+
+};
+
+class NoteList
+{
+private:
+    Node* first;
+public:
+    NoteList();
+    ~NoteList();
+
+    void add(const NOTE& note);
+    void removeByPhone(const std::string phone);
+
+    bool findByPhone(const std::string& phone) const;
+
+
+    void printAll() const;
+
+};
+
 
 #endif // NOTE_LIST_H
