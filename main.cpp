@@ -2,7 +2,6 @@
 #include "NoteList.h"
 #include "TextTask.h"
 
-
 void printMenu()
 {
     std::cout << "\n========= МЕНЮ =========\n";
@@ -26,73 +25,62 @@ int main()
         printMenu();
         std::cin >> choice;
 
-        switch (choice)
-        {
-        case 1: {
-            try
+        try {
+            switch (choice)
             {
+            case 1: {
                 NOTE note;
                 std::cin >> note;
                 list.add(note);
                 std::cout << "Запись добавлена.\n";
+                break;
             }
-            catch (const std::exception& e)
-            {
-                std::cout << "\033[31mОшибка: " << e.what() << "\033[0m\n";
+            case 2: {
+                std::string phone;
+                std::cout << "Введите номер телефона: ";
+                std::cin >> phone;
+                list.removeByPhone(phone);
+                break;
             }
-            break;
-        }
-        case 2: {
-            std::string phone;
-            std::cout << "Введите номер телефона: ";
-            std::cin >> phone;
-            list.removeByPhone(phone);
-            break;
-        }
-        case 3: {
-            std::string phone;
-            std::cout << "Введите номер телефона: ";
-            std::cin >> phone;
-            list.findByPhone(phone);
-            break;
-        }
-
-        case 4:
-            list.printAll();
-            break;
-
-        case 5: {
-            std::string phone;
-            std::cout << "Введите номер телефона: ";
-            std::cin >> phone;
-
-            try {
+            case 3: {
+                std::string phone;
+                std::cout << "Введите номер телефона: ";
+                std::cin >> phone;
+                list.findByPhone(phone);
+                break;
+            }
+            case 4:
+                list.printAll();
+                break;
+            case 5: {
+                std::string phone;
+                std::cout << "Введите номер телефона: ";
+                std::cin >> phone;
                 list.editByPhone(phone);
+                break;
             }
-            catch (const std::exception& e) {
-                std::cout << "\033[31mОшибка: " << e.what() << "\033[0m\n";
+            case 6: {
+                char filename[256];
+                std::cout << "Введите имя файла: ";
+                std::cin >> filename;
+
+                std::cout << "\033[36mРезультат обработки:\n\033[32m";
+                printDashSentencesFromFile(filename);
+                std::cout << "\033[36mКонец вывода обработки:\033[0m\n";
+                break;
             }
-            break;
+            case 0:
+                std::cout << "Выход из программы.\n";
+                break;
+            default:
+                std::cout << "Неверный пункт меню.\n";
+                break;
+            }
+        }
+        catch (const std::exception& e) {
+            std::cout << "\033[31mОшибка: " << e.what() << "\033[0m\n";
         }
 
-        case 6: {
-            char filename[256];
-            std::cout << "Введите имя файла: ";
-            std::cin >> filename;
-
-            std::cout << "\033[36mРезультат обработки:\n\033[32m";
-            printDashSentencesFromFile(filename);
-            std::cout << "\033[36mКонец вывода обработки:\033[0m\n";
-            break;
-        }
-
-        case 0:
-            std::cout << "Выход из программы.\n";
-            break;
-
-        default:
-            std::cout << "Неверный пункт меню.\n";
-        }
     } while (choice != 0);
 
     return 0;
